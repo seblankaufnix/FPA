@@ -5,10 +5,10 @@ import javax.swing.*;
 /**
  * Created by Sebastian on 23.10.2015.
  */
-public class VorhabenUI extends GeneralUI {
+public class VorhabenUI extends AufgabeUI {
 
     public VorhabenUI(JFrame parent, String id, String remainingHours, String hoursWorked, String status, String[] partOf){
-        super(parent,"Vorhaben erfassen/aendern");
+        super(parent,"Vorhaben erfassen/aendern", "End-Termin");
         build(id, remainingHours, hoursWorked, status, partOf);
     }
 
@@ -23,6 +23,5 @@ public class VorhabenUI extends GeneralUI {
         super.status.setEditable(false);
         super.partOf.setModel(new JComboBox<>(partOf).getModel());
         super.partOf.setEditable(false);
-
     }
 }

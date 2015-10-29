@@ -1,15 +1,14 @@
 package aufgabenplaner;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by Sebastian on 23.10.2015.
  */
-public class SchrittUI extends GeneralUI{
+public class SchrittUI extends AufgabeUI {
 
     public SchrittUI(JFrame parent, String id, String status, String endDate, String[] partOf){
-        super(parent, "Schritt erfassen/aendern");
+        super(parent, "Schritt erfassen/aendern", "Erledigt-Zeitpunkt");
         build(id, status, endDate, partOf);
     }
 

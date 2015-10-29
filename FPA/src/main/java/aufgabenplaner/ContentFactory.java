@@ -8,15 +8,13 @@ import java.awt.*;
  */
 public class ContentFactory {
 
-    Container content;
-    protected JDialog jd;
+    protected final Container content;
+    protected final JDialog jd;
 
     public ContentFactory(JFrame parent, String title){
         jd = new JDialog(parent, title);
         this.content = jd.getContentPane();
-        content.setLayout(new BoxLayout(content,BoxLayout.Y_AXIS));
-        parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        content.setLayout(new GridLayout(17,1));
     }
 
     protected JTextField textFieldFactory(String title){
@@ -54,7 +52,7 @@ public class ContentFactory {
 
     protected JLabel labelFactory(String title){
         JLabel label = new JLabel(title);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
+        label.setAlignmentX(Container.LEFT_ALIGNMENT);
         content.add(label);
         return label;
     }
