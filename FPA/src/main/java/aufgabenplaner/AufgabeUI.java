@@ -1,11 +1,9 @@
 package aufgabenplaner;
 
-import com.sun.javaws.exceptions.MultipleHostsException;
 import multex.Exc;
 import multex.Swing;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 
@@ -50,7 +48,7 @@ public class AufgabeUI extends ContentFactory{
 
     }
 
-    public void actionPerformedwithTrows() throws Exc {
+    private void actionPerformedwithTrows() throws Exc {
         System.out.println("Erledigen des Schritts " + title.getText());
         throw new Exc("Diese Aufgabe ist zu schwer");
     }
