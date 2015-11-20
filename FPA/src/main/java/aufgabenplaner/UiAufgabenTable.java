@@ -53,7 +53,16 @@ public class UiAufgabenTable extends JTable {
         vorhaben.setEndTermin(new Date(2000,1,1));
         final DefaultTableModel dtm = new DefaultTableModel(new Object[][]{}, columnNames);
 
-        final DmAufgabe a1 = new DmSchritt();
+        final DmAufgabe a1 = new DmSchritt(){
+            @Override
+            public Long getId(){
+                return 321L;
+            }
+            @Override
+            public DmAufgabeStatus getStatus(){
+                return DmAufgabeStatus.inBearbeitung;
+            }
+        };
         a1.setTitel("Schritt 1: Vorbereiten");
         a1.setGanzes(vorhaben);
         final Object[] data1 ={a1.getId(), a1.getTitel(), a1.getAnzahlTeile(), a1.getStatus()};
@@ -74,7 +83,16 @@ public class UiAufgabenTable extends JTable {
         final Object[] data2 ={a2.getId(), a2.getTitel(), a2.getAnzahlTeile(), a2.getStatus()};
         dtm.addRow(data2);
 
-        final DmAufgabe a3 = new DmSchritt();
+        final DmAufgabe a3 = new DmSchritt(){
+            @Override
+            public Long getId(){
+                return 12L;
+            }
+            @Override
+            public DmAufgabeStatus getStatus(){
+                return DmAufgabeStatus.neu;
+            }
+        };
         a3.setTitel("Schritt 3: Beenden");
         a3.setGanzes(vorhaben);
         final Object[] data3 = {a3.getId(), a3.getTitel(), a3.getAnzahlTeile(), a3.getStatus()};
