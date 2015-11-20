@@ -1,4 +1,4 @@
-package test.java.platform;
+package platform;
 
 import java.util.List;
 import java.util.logging.Logger;
