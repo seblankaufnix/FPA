@@ -43,27 +43,41 @@ public class UiAufgabenTable extends JTable {
                 "ID","Titel","#Teile","Status"
         };
 
-        DmVorhaben vorhaben = new DmVorhaben();
+        final DmVorhaben vorhaben = new DmVorhaben(){
+            @Override
+            public Long getId(){
+                return 123L;
+            }
+        };
         vorhaben.setTitel("testVorhaben");
         vorhaben.setEndTermin(new Date(2000,1,1));
-        DefaultTableModel dtm = new DefaultTableModel(new Object[][]{}, columnNames);
+        final DefaultTableModel dtm = new DefaultTableModel(new Object[][]{}, columnNames);
 
-        DmAufgabe a1 = new DmSchritt();
+        final DmAufgabe a1 = new DmSchritt();
         a1.setTitel("Schritt 1: Vorbereiten");
         a1.setGanzes(vorhaben);
-        Object[] data1 ={a1.getId(), a1.getTitel(), a1.getAnzahlTeile(), a1.getStatus()};
+        final Object[] data1 ={a1.getId(), a1.getTitel(), a1.getAnzahlTeile(), a1.getStatus()};
         dtm.addRow(data1);
 
-        DmAufgabe a2 = new DmVorhaben();
+        final DmAufgabe a2 = new DmVorhaben(){
+            @Override
+            public Long getId(){
+                return 123L;
+            }
+            @Override
+            public DmAufgabeStatus getStatus(){
+                return DmAufgabeStatus.erledigt;
+            }
+        };
         a2.setTitel("Vorhaben: Bearbeiten");
         a2.setGanzes(vorhaben);
-        Object[] data2 ={a2.getId(), a2.getTitel(), a2.getAnzahlTeile(), a2.getStatus()};
+        final Object[] data2 ={a2.getId(), a2.getTitel(), a2.getAnzahlTeile(), a2.getStatus()};
         dtm.addRow(data2);
 
-        DmAufgabe a3 = new DmSchritt();
+        final DmAufgabe a3 = new DmSchritt();
         a3.setTitel("Schritt 3: Beenden");
         a3.setGanzes(vorhaben);
-        Object[] data3 = {a3.getId(), a3.getTitel(), a3.getAnzahlTeile(), a3.getStatus()};
+        final Object[] data3 = {a3.getId(), a3.getTitel(), a3.getAnzahlTeile(), a3.getStatus()};
         dtm.addRow(data3);
 
 

@@ -17,7 +17,6 @@ public class AufgabeUI extends ContentFactory{
     final protected JTextArea description;
     final protected JPanel buttons;
 
-
     public AufgabeUI(JFrame parent, String title, String endLabel) {
         super(parent,title);
         id = textFieldFactory("ID:");
@@ -45,13 +44,10 @@ public class AufgabeUI extends ContentFactory{
         }catch (Exc exc){
             Swing.report(new JDialog(), exc);
         }
-
     }
 
     private void actionPerformedwithTrows() throws Exc {
         System.out.println("Erledigen des Schritts " + title.getText());
         throw new Exc("Diese Aufgabe ist zu schwer");
     }
-
-
 }
