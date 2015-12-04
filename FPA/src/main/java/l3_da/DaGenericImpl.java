@@ -48,7 +48,6 @@ public class DaGenericImpl<E> implements DaGeneric<E> {
     @Override
     public List<E> findAll() {
         Query q = em.createQuery("SELECT t FROM " + c.getSimpleName() + " t ");
-
         return q.getResultList();
     }
 
