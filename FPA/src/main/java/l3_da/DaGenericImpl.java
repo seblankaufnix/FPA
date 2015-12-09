@@ -27,6 +27,8 @@ public class DaGenericImpl<E> implements DaGeneric<E> {
         //falls keine ID, persist(), else merge()
         if(!em.contains(entity)){
             em.persist(entity);
+        } else {
+            em.merge(entity);
         }
         return em.contains(entity);
     }

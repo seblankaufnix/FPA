@@ -13,28 +13,37 @@ public class DaFactoryTest {
 
     //transaktionenn fehlen!
 
-    protected static final DaFactoryForJPA dff = new DaFactoryForJPA();
+    protected static DaFactoryForJPA fac = new DaFactoryForJPA();
+
+    @Test
+    public void testTransactionStates() throws Exception {
+        assertFalse(fac.getTransactionState());
+        fac.beginTransaction();
+        assertTrue(fac.getTransactionState());
+        fac.endTransaction(true);
+        assertFalse(fac.getTransactionState());
+    }
 
     @Test
     public void testGetAufgabeDA() throws Exception {
-        DaAufgabe a = dff.getAufgabeDA();
-        DaAufgabe b = dff.getAufgabeDA();
+        DaAufgabe a = fac.getAufgabeDA();
+        DaAufgabe b = fac.getAufgabeDA();
         assertNotNull(a);
         assertTrue(a.equals(b));
     }
 
     @Test
     public void testGetSchrittDA() throws Exception {
-        DaSchritt a = dff.getSchrittDA();
-        DaSchritt b = dff.getSchrittDA();
+        DaSchritt a = fac.getSchrittDA();
+        DaSchritt b = fac.getSchrittDA();
         assertNotNull(a);
         assertTrue(a.equals(b));
     }
 
     @Test
     public void testGetVorhabenDA() throws Exception {
-        DaVorhaben a = dff.getVorhabenDA();
-        DaVorhaben b = dff.getVorhabenDA();
+        DaVorhaben a = fac.getVorhabenDA();
+        DaVorhaben b = fac.getVorhabenDA();
         assertNotNull(a);
         assertTrue(a.equals(b));
     }

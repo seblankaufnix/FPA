@@ -2,8 +2,7 @@ package a5tests;
 
 import static org.junit.Assert.*;
 
-import l3_da.DaGeneric;
-import l3_da.DaGenericImpl;
+import l3_da.*;
 import l4_dm.DmSchritt;
 import org.junit.Test;
 import org.junit.runners.Parameterized;
@@ -14,40 +13,58 @@ import java.util.List;
 import java.util.UUID;
 
 public class DaGenericImplTest {
-    private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("aufgabenplaner");
-    private static final EntityManager entityManager = entityManagerFactory.createEntityManager();
-    protected final DaGenericImpl<DmSchritt> generic = new DaGenericImpl<>(DmSchritt.class, entityManager);
-    protected EntityTransaction transaction = entityManager.getTransaction();
+    private static final DaFactory fac = new DaFactoryForJPA();
+    protected final DaGeneric<DmSchritt> generic = fac.getSchrittDA();
     protected DmSchritt schritt = new DmSchritt();
 
 
     //nur DA schicht verwenden!
     public DaGenericImplTest() {
         schritt.setTitel("title");
-        if(!transaction.isActive()){
-            transaction.begin();
-        }
-
+        fac.beginTransaction();
     }
 
     @Test
     public void testSave() throws Exception {
         generic.save(schritt);
-        assertTrue(entityManager.contains(schritt));
+        assertEquals(schritt, generic.find(schritt.getId()));
+        fac.endTransaction(true);
     }
 
     @Test
     public void testDelete() throws Exception {
         generic.save(schritt);
-        assertTrue(entityManager.contains(schritt));
         generic.delete(schritt);
-        assertFalse(entityManager.contains(schritt));
+        try {
+            // should throw an IdNotFoundExc
+            generic.find(schritt.getId());
+            // fails if IdNotFoundExc not thrown
+            fail();
+        } catch (DaGeneric.IdNotFoundExc e) {
+            // test passed, if IdNotFoundExc catched
+            assert(true);
+        } finally {
+            fac.endTransaction(true);
+        }
     }
 
     @Test
     public void testFind() throws Exception {
         generic.save(schritt);
         assertEquals(schritt, generic.find(schritt.getId()));
+        DmSchritt deleted = new DmSchritt();
+        deleted.setTitel("another title");
+        generic.save(deleted);
+        Long deletedId = deleted.getId();
+        generic.delete(deleted);
+        try {
+            generic.find(deletedId);
+            fail();
+        } catch (DaGeneric.IdNotFoundExc e) {
+            assert(true);
+        } finally {
+            fac.endTransaction(true);
+        }
     }
 
     public List<DmSchritt> getDmSchrittList(int count) {
@@ -69,8 +86,9 @@ public class DaGenericImplTest {
         List<DmSchritt> found = generic.findAll();
         assertEquals(list.size(),found.size());
         for(DmSchritt s : found){
-            entityManager.contains(s);
+            if(!found.contains(s)) fail();
         }
+        fac.endTransaction(true);
     }
 
 //    @Test

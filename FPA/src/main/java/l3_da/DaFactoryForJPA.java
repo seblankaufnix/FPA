@@ -53,4 +53,8 @@ public class DaFactoryForJPA implements DaFactory {
         em.clear();
         // noch testen!
     }
+
+    public boolean getTransactionState() {
+        return t != null && t.isActive();
+    }
 }
