@@ -1,10 +1,12 @@
 package l3_da;
 
 import l4_dm.DmAufgabe;
+import multex.MultexUtil;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class DaGenericImpl<E> implements DaGeneric<E> {
 
     @Override
     public boolean save(E entity) {
+        //falls keine ID, persist(), else merge()
         if(!em.contains(entity)){
             em.persist(entity);
         }
@@ -30,9 +33,7 @@ public class DaGenericImpl<E> implements DaGeneric<E> {
 
     @Override
     public void delete(E entity) {
-        if(em.contains(entity)){
-            em.remove(entity);
-        }
+        em.remove(entity);
     }
 
     @Override
@@ -41,13 +42,13 @@ public class DaGenericImpl<E> implements DaGeneric<E> {
         if(found != null){
             return found;
         }else{
-            throw new IdNotFoundExc();
+            throw MultexUtil.create(IdNotFoundExc.class, c.getSimpleName(), id);
         }
     }
 
     @Override
     public List<E> findAll() {
-        Query q = em.createQuery("SELECT t FROM " + c.getSimpleName() + " t ");
+        final TypedQuery<E> q = em.createQuery("SELECT t FROM " + c.getSimpleName() + " t ", c);
         return q.getResultList();
     }
 

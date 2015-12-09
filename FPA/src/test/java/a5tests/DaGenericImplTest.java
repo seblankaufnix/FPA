@@ -20,6 +20,8 @@ public class DaGenericImplTest {
     protected EntityTransaction transaction = entityManager.getTransaction();
     protected DmSchritt schritt = new DmSchritt();
 
+
+    //nur DA schicht verwenden!
     public DaGenericImplTest() {
         schritt.setTitel("title");
         if(!transaction.isActive()){

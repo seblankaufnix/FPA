@@ -16,7 +16,6 @@ public class DaFactoryForJPA implements DaFactory {
     public DaFactoryForJPA() {
         emf = javax.persistence.Persistence.createEntityManagerFactory("aufgabenplaner");
         em = emf.createEntityManager();
-        t = em.getTransaction();
 
         da = new DaAufgabeImpl(em);
         ds = new DaSchrittImpl(em);
@@ -40,6 +39,7 @@ public class DaFactoryForJPA implements DaFactory {
 
     @Override
     public void beginTransaction() {
+        t = em.getTransaction();
         t.begin();
     }
 
@@ -51,6 +51,6 @@ public class DaFactoryForJPA implements DaFactory {
             t.rollback();
         }
         em.clear();
-        em.close();
+        // noch testen!
     }
 }

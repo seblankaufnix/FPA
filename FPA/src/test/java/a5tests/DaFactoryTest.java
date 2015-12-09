@@ -9,17 +9,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Mio on 02/12/2015.
- */
 public class DaFactoryTest {
 
-    protected DaFactoryForJPA dff = new DaFactoryForJPA();
+    //transaktionenn fehlen!
+
+    protected static final DaFactoryForJPA dff = new DaFactoryForJPA();
 
     @Test
     public void testGetAufgabeDA() throws Exception {
         DaAufgabe a = dff.getAufgabeDA();
         DaAufgabe b = dff.getAufgabeDA();
+        assertNotNull(a);
         assertTrue(a.equals(b));
     }
 
@@ -27,6 +27,7 @@ public class DaFactoryTest {
     public void testGetSchrittDA() throws Exception {
         DaSchritt a = dff.getSchrittDA();
         DaSchritt b = dff.getSchrittDA();
+        assertNotNull(a);
         assertTrue(a.equals(b));
     }
 
@@ -34,6 +35,7 @@ public class DaFactoryTest {
     public void testGetVorhabenDA() throws Exception {
         DaVorhaben a = dff.getVorhabenDA();
         DaVorhaben b = dff.getVorhabenDA();
+        assertNotNull(a);
         assertTrue(a.equals(b));
     }
 }
