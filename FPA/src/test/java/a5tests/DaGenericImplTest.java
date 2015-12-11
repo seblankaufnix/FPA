@@ -15,7 +15,7 @@ import java.util.UUID;
 public class DaGenericImplTest {
     private static final DaFactory fac = new DaFactoryForJPA();
     protected final DaGeneric<DmSchritt> generic = fac.getSchrittDA();
-    protected DmSchritt schritt = new DmSchritt();
+    protected final DmSchritt schritt = new DmSchritt();
 
 
     //nur DA schicht verwenden!
@@ -39,10 +39,9 @@ public class DaGenericImplTest {
             // should throw an IdNotFoundExc
             generic.find(schritt.getId());
             // fails if IdNotFoundExc not thrown
-            fail();
-        } catch (DaGeneric.IdNotFoundExc e) {
-            // test passed, if IdNotFoundExc catched
-            assert(true);
+            fail("DaGeneric.IdNotFoundExc expected");
+        } catch (DaGeneric.IdNotFoundExc expected) {
+
         } finally {
             fac.endTransaction(true);
         }
@@ -52,25 +51,24 @@ public class DaGenericImplTest {
     public void testFind() throws Exception {
         generic.save(schritt);
         assertEquals(schritt, generic.find(schritt.getId()));
-        DmSchritt deleted = new DmSchritt();
+        final DmSchritt deleted = new DmSchritt();
         deleted.setTitel("another title");
         generic.save(deleted);
-        Long deletedId = deleted.getId();
+        final Long deletedId = deleted.getId();
         generic.delete(deleted);
         try {
             generic.find(deletedId);
-            fail();
-        } catch (DaGeneric.IdNotFoundExc e) {
-            assert(true);
+            fail("DaGeneric.IdNotFoundExc expected");
+        } catch (DaGeneric.IdNotFoundExc expected) {
         } finally {
             fac.endTransaction(true);
         }
     }
 
     public List<DmSchritt> getDmSchrittList(int count) {
-        List<DmSchritt> list = new ArrayList<DmSchritt>();
+        final List<DmSchritt> list = new ArrayList<DmSchritt>();
         for(int i = 0 ; i < count; i++) {
-            DmSchritt schritt = new DmSchritt();
+            final DmSchritt schritt = new DmSchritt();
             schritt.setIstStunden(10);
             schritt.setTitel("shizzle" + i);
             generic.save(schritt);
@@ -82,11 +80,11 @@ public class DaGenericImplTest {
 
     @Test
     public void testFindAll() throws Exception {
-        List<DmSchritt> list = getDmSchrittList(10);
-        List<DmSchritt> found = generic.findAll();
+        final List<DmSchritt> list = getDmSchrittList(10);
+        final List<DmSchritt> found = generic.findAll();
         assertEquals(list.size(),found.size());
-        for(DmSchritt s : found){
-            if(!found.contains(s)) fail();
+        for(final DmSchritt s : found){
+            if(!list.contains(s)) fail( s + " is not contained in list " + list);
         }
         fac.endTransaction(true);
     }
